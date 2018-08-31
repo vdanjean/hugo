@@ -58,6 +58,16 @@ It is also possible to use the `GroupBy` functions in combination with paginatio
 {{ range (.Paginate (.Pages.GroupByDate "2006")).PageGroups  }}
 ```
 
+For even more flexibility, groups of pages can be manually created with the
+`.Page.Group` function and a slice of them can be given to `.Paginate`:
+
+```
+{{ $cool := .Page.Group "cool" (where .Site.RegularPages "Params.cool" true) }}
+{{ $blue := .Page.Group "blue" (where .Site.RegularPages "Params.blue" true) }}
+{{ $paginator := .Page.Paginate (slice $cool $blue) }}
+{{ range $paginator.PageGroups }}
+``
+
 ## Build the navigation
 
 The `.Paginator` contains enough information to build a paginator interface.
